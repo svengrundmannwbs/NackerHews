@@ -18,7 +18,7 @@ function App() {
 
   document.body.style = "background: #2ec4b6;";
 
-  const url = `http://hn.algolia.com/api/v1/search_by_date?query=${topic}&tags=story&page=${page}`;
+  const url = `https://hn.algolia.com/api/v1/search_by_date?query=${topic}&tags=story&page=${page}`;
 
   useEffect(() => {
     handleSearch();

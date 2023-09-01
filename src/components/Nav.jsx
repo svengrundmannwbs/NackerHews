@@ -8,7 +8,7 @@ const Nav = ({ handleSearch, setTopic, topic }) => {
           <div className="col-6">
             <nav>
               <a href="#">
-                <img src="/nackerhews.svg" width="50" />
+                <img src="./nackerhews.svg" width="50" />
               </a>
               &nbsp;
               <strong>Nacker Hews</strong>
