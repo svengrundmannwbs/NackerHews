@@ -9,9 +9,10 @@ import ItemList from "./components/ItemList";
 
 function App() {
   const [hits, setHits] = useState([]);
-  const [topic, setTopic] = useState("");
+  const [topic, setTopic] = useState("react");
   const [page, setPage] = useState(0);
   const [nbPages, setnbPages] = useState(0);
+  const [hitCount, setHitCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState([]);
 
@@ -21,15 +22,21 @@ function App() {
 
   useEffect(() => {
     handleSearch();
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    setPage(0);
+    setnbPages(0);
+    handleSearch();
+  }, [topic]);
 
   const handleSearch = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const response = await axios.get(url).then(function (response) {
         const searchData = response.data;
-        //console.log("page, topic, data: ", page, topic, searchData);
         setHits(searchData.hits);
+        setHitCount(searchData.nbHits);
         setPage(searchData.page);
         setnbPages(searchData.nbPages);
       });
@@ -44,7 +51,7 @@ function App() {
     <>
       <header className="container mt-4">
         <div className="row d-flex align-items-center">
-          <Nav handleSearch={handleSearch} setTopic={setTopic} />
+          <Nav handleSearch={handleSearch} setTopic={setTopic} topic={topic} />
         </div>
       </header>
       <main className="container">
@@ -56,10 +63,16 @@ function App() {
                 <p>{apiError[1]}</p>
               </div>
             ) : null}
-            {!hits.length && !isLoading && !apiError ? (
+            {hits.length === 0 ? (
               "No search results"
             ) : (
-              <ItemList hits={hits} isLoading={isLoading} page={page} />
+              <ItemList
+                hits={hits}
+                isLoading={isLoading}
+                page={page}
+                topic={topic}
+                hitCount={hitCount}
+              />
             )}
           </div>
         </div>

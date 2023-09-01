@@ -1,18 +1,33 @@
 import Item from "./Item";
 
-function ItemList({ page, hits, isLoading }) {
+function ItemList({ page, hits, isLoading, topic, hitCount }) {
   return (
-    <ul className="list-group" id="hits">
-      {!isLoading ? (
-        hits.map((hit, index) => (
-          <Item page={page} hit={hit} key={index} id={index} />
-        ))
+    <>
+      <span className="badge rounded-pill text-bg-secondary position-relative">
+        Results for topic: "{topic}"
+      </span>
+      &nbsp;
+      {hitCount > 1000 ? (
+        <span className="badge rounded-pill text-bg-secondary position-relative bg-danger">
+          {hitCount}
+        </span>
       ) : (
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+        <span className="badge rounded-pill text-bg-secondary position-relative bg-success">
+          {hitCount}
+        </span>
       )}
-    </ul>
+      <ul className="list-group" id="hits">
+        {!isLoading ? (
+          hits.map((hit, index) => (
+            <Item page={page} hit={hit} key={index} id={index} />
+          ))
+        ) : (
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        )}
+      </ul>
+    </>
   );
 }
 

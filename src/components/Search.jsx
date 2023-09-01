@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Search = ({ handleSearch, setTopic }) => {
+const Search = ({ handleSearch, setTopic, topic }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = ({ target }) => {
@@ -10,7 +10,6 @@ const Search = ({ handleSearch, setTopic }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setTopic(inputValue.trim());
-    handleSearch();
   };
 
   return (
@@ -18,11 +17,17 @@ const Search = ({ handleSearch, setTopic }) => {
       <div className="row">
         <div className="col d-flex gap-2">
           <input
+            id="topic"
+            name="topic"
             className="form-control"
             type="text"
             placeholder="Enter topic..."
-            value={inputValue}
             onChange={handleInputChange}
+            onInvalid={(event) =>
+              event.target.setCustomValidity("Enter search topic")
+            }
+            onInput={(event) => event.target.setCustomValidity("")}
+            required
           />
           <button className="btn btn-primary" type="sumbit">
             Search
