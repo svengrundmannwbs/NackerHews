@@ -1,0 +1,44 @@
+:root {
+  --hn-color1: #031524;
+  --hn-color2: #fdfffc;
+  --hn-color3: #2ec4b6;
+  --hn-color4: #e71d36;
+  --hn-color5: #ff9f1c;
+  --hn-color6: #dfdada;
+}
+
+#root {
+  background-color: var(--hn-color3);
+  color: var(--hn-color2);
+}
+
+header {
+  line-height: 2.5rem;
+  margin: 10px;
+}
+
+main #hits {
+  margin: 10px;
+}
+
+#hits li:nth-child(even) {
+  background-color: var(--hn-color6);
+}
+
+#hits li:nth-child(odd) {
+  background-color: var(--hn-color2);
+}
+
+#hits li:nth-child(even):hover {
+  background: rgb(200, 200, 200);
+}
+
+#hits li:nth-child(odd):hover {
+  background: rgb(190, 190, 190);
+}
+
+div.spinner-border {
+  /**/
+  width: 6rem;
+  height: 6rem;
+}
