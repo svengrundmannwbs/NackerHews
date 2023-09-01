@@ -9,6 +9,7 @@ const Search = ({ handleSearch, setTopic }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(inputValue.trim());
     setTopic(inputValue.trim());
     handleSearch();
   };

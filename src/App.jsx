@@ -13,25 +13,29 @@ function App() {
   const [page, setPage] = useState(0);
   const [nbPages, setnbPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState([]);
 
   document.body.style = "background: #2ec4b6;";
 
+  const url = `http://hn.algolia.com/api/v1/search_by_date?query=${topic}&tags=story&page=${page}`;
+
   useEffect(() => {
     handleSearch();
-  }, [page]);
+  }, []);
 
   const handleSearch = async () => {
-    setIsLoading(true);
     try {
-      const response = await axios.get(
-        `http://hn.algolia.com/api/v1/search_by_date?query=${topic}&tags=story&page=${page}`
-      );
-      const searchData = response.data;
-      setHits(searchData.hits);
-      setPage(searchData.page);
-      setnbPages(searchData.nbPages);
+      setIsLoading(true);
+      const response = await axios.get(url).then(function (response) {
+        const searchData = response.data;
+        //console.log("page, topic, data: ", page, topic, searchData);
+        setHits(searchData.hits);
+        setPage(searchData.page);
+        setnbPages(searchData.nbPages);
+      });
     } catch (error) {
-      console.error(error);
+      //error handling
+      error.code === "ERR_NETWORK" ? setApiError([true, error.message]) : null;
     }
     setIsLoading(false);
   };
@@ -46,7 +50,13 @@ function App() {
       <main className="container">
         <div className="row">
           <div className="col">
-            {!hits.length && !isLoading ? (
+            {apiError[0] ? (
+              <div>
+                <h2>API Fehler!</h2>
+                <p>{apiError[1]}</p>
+              </div>
+            ) : null}
+            {!hits.length && !isLoading && !apiError ? (
               "No search results"
             ) : (
               <ItemList hits={hits} isLoading={isLoading} page={page} />

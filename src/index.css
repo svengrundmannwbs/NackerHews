@@ -42,3 +42,11 @@ div.spinner-border {
   width: 6rem;
   height: 6rem;
 }
+
+li.page-item.disabled {
+  cursor: not-allowed;
+}
+
+li.page-item.page-link {
+  cursor: pointer;
+}
